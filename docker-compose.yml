@@ -1,31 +1,30 @@
 services:
   ftp-server:
-    image: 
+    image: nicolassarmiento8/fedora-ftp:latest
     container_name: ftp_server
     ports:
       - "20"
       - "21"
     volumes:
-      - ftp-data:/ftp/shared        
-      - server-config:/app/config   
+      - ftp-data:/home         
     networks:
-      custom_net:
+      private_network:
         ipv4_address: 172.24.0.2
 
   ssh-server:
-    image: joseslk/ssh-server:latest
+    image: nicolassarmiento8/ssh-server:latest
     container_name: ssh_server
     ports:
-      - "2222:22"
+      - "22"
     volumes:
       - ssh-user:/home        
       - ssh-config:/etc/ssh   
     networks:
-      custom_net:
+      private_network:
         ipv4_address: 172.24.0.3
 
   client:
-    image: debian:bullseye-slim
+    image: nicolassarmiento8/client:latest
     container_name: client
     depends_on:
       - ftp-server
@@ -33,19 +32,18 @@ services:
     volumes:
       - client-data:/home
     networks:
-      custom_net:
+      private_network:
         ipv4_address: 172.24.0.4
 
 volumes:
   ftp-data:
-  server-config:
   client-config:
   ssh-user:        
   ssh-config:   
   client-data:
 
 networks:
-  custom_net:
+  private_network:
     driver: bridge
     ipam:
       config:

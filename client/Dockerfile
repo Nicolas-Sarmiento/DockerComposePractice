@@ -17,4 +17,4 @@ RUN chmod +x /usr/local/bin/setup.sh && \
 USER douuser
 WORKDIR /home/douuser
 
-CMD ["/usr/local/bin/setup.sh"]
+CMD ["tail", "-f", "/dev/null"]
