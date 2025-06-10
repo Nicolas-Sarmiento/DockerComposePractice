@@ -13,10 +13,10 @@ services:
         ipv4_address: 172.24.0.2
 
   ssh-server:
-    image: 
+    image: joseslk/ssh-server:latest
     container_name: ssh_server
     ports:
-      - "22"
+      - "2222:22"
     volumes:
       - ssh-user:/home        
       - ssh-config:/etc/ssh   
@@ -25,7 +25,7 @@ services:
         ipv4_address: 172.24.0.3
 
   client:
-    image: 
+    image: debian:bullseye-slim
     container_name: client
     depends_on:
       - ftp-server
